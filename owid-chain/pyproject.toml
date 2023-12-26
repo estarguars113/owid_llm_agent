@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "owid-chain"
+version = "0.1.0"
+description = ""
+authors = ["Paola Garcia <estarguars113@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+langchain = "^0.0.352"
+openai = "^1.6.1"
+streamlit = "^1.29.0"
+black = "^23.12.1"
+owid-catalog = "^0.3.8"
+wikipedia = "^1.4.0"
+python-dotenv = "^1.0.0"
+arxiv = "^2.1.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 79
