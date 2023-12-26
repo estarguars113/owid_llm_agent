@@ -4,6 +4,7 @@
 *.pyc
 *.log
 .agent-history-file
+*.ipynb
 
 
 # Created by https://www.toptal.com/developers/gitignore/api/python
