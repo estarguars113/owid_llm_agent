@@ -2,7 +2,7 @@ import streamlit as st
 from dotenv import load_dotenv
 
 from langchain.agents import AgentExecutor
-from langchain.agents.output_parsers import ReActSingleInputOutputParser
+import pandas as pd
 
 from callbacks import StreamlitCallbackHandler
 import json
@@ -28,14 +28,22 @@ def init_stream_lit():
     simple_chat_tab, historical_tab = st.tabs(["Simple Chat", "Session History"])
     with simple_chat_tab:
         user_question = st.text_input("Your question")
-        with st.spinner('Please wait ...'):
-            try:
-                response= agent_executor.run(user_question, callbacks=[StreamlitCallbackHandler(st)])
-                if response:
-                    response = json.loads(response)
-                    write_response(st, response)
-            except Exception as e:
-                st.error(f"Error occurred: {e}")
+        if user_question:
+            with st.spinner('Please wait ...'):
+                try:
+                    response= agent_executor.run(user_question, callbacks=[StreamlitCallbackHandler(st)])
+                    if response:
+                        response = json.loads(response)
+                        write_response(st, response)
+
+                        if 'extra_data' in response:
+                            st.write('Extra data available, click to see it')
+                            if st.button('Show Data'):
+                                df = pd.read_csv('data.csv')
+                                st.dataframe(df)
+
+                except Exception as e:
+                    st.error(f"Error occurred: {e}")
     with historical_tab:
         for q in st.session_state[QUESTION_HISTORY]:
             question = q[0]
